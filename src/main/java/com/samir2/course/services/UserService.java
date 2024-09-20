@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.samir2.course.entities.User;
 import com.samir2.course.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UserService {
@@ -19,9 +20,9 @@ public class UserService {
 		return repository.findAll();
 	}
 	
-	public User findAById(Long Id) {
-	    Optional<User> obj  = repository.findById(Id);
-	    return obj.get();
+	public User findById(EntityNotFoundException id) {
+		Optional<User> obj = repository.findById(id);
+		return obj.orElseThrow(() -> new EntityNotFoundException(id));
 	}
 	
 	public User insert(User obj) {
@@ -42,5 +43,10 @@ public class UserService {
 		entity.setName(obj.getName());
 		entity.setEmail(obj.getEmail());
 		entity.setPhone(obj.getPhone());
+	}
+
+	public User findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
